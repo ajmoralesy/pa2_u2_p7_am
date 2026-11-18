@@ -2,27 +2,21 @@ package uce.edu.ec.pa.grupo.u2.pedidos.domain.model;
 
 public class Pedido {
     private Integer id;
-    private String producto;
+    private String nombre;
     private Double precio;
-
-    
-
-    public Pedido(Integer id, String producto, Double precio) {
-        this.id = id;
-        this.producto = producto;
-        this.precio = precio;
-    }
+    private String categoria;
+    private Integer stock;
     public Integer getId() {
         return id;
     }
     public void setId(Integer id) {
         this.id = id;
     }
-    public String getProducto() {
-        return producto;
+    public String getNombre() {
+        return nombre;
     }
-    public void setProducto(String producto) {
-        this.producto = producto;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
     public Double getPrecio() {
         return precio;
@@ -30,6 +24,22 @@ public class Pedido {
     public void setPrecio(Double precio) {
         this.precio = precio;
     }
+    public String getCategoria() {
+        return categoria;
+    }
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+    public Integer getStock() {
+        return stock;
+    }
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    
+
+ 
 
     
 
