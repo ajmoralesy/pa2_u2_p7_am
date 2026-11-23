@@ -1,46 +1,85 @@
 package uce.edu.ec.pa.grupo.u2.pedidos.domain.model;
 
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+
+@Entity
+@Table(name = "pedidos")
 public class Pedido {
+
+    @Id
+    @SequenceGenerator(name = "pedido_seq", sequenceName = "pedido_seq_db", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pedido_seq")
+    @Column(name = "pdd_id")
     private Integer id;
-    private String nombre;
+
+    @Column(name = "pdd_producto")
+    private String producto;
+
+    @Column(name = "pdd_precio")
     private Double precio;
-    private String categoria;
-    private Integer stock;
+
+    @Column(name = "pdd_fecha")
+    private LocalDateTime fecha;
+
+    // Constructor vacio
+    public Pedido() {
+    }
+
+    // Constructor con parametros
+    public Pedido(Integer id, String producto, Double precio,
+            LocalDateTime fecha) {
+        this.id = id;
+        this.producto = producto;
+        this.precio = precio;
+        this.fecha = fecha;
+    }
+
+    // Getters y setters
     public Integer getId() {
         return id;
     }
+
     public void setId(Integer id) {
         this.id = id;
     }
-    public String getNombre() {
-        return nombre;
+
+    public String getProducto() {
+        return producto;
     }
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+
+    public void setProducto(String producto) {
+        this.producto = producto;
     }
+
     public Double getPrecio() {
         return precio;
     }
+
     public void setPrecio(Double precio) {
         this.precio = precio;
     }
-    public String getCategoria() {
-        return categoria;
-    }
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-    public Integer getStock() {
-        return stock;
-    }
-    public void setStock(Integer stock) {
-        this.stock = stock;
+
+    public LocalDateTime getFecha() {
+        return fecha;
     }
 
-    
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
+    }
 
- 
-
-    
-
+    @Override
+    public String toString() {
+        return "Pedido [id=" + id +
+                ", producto=" + producto +
+                ", precio=" + precio +
+                ", fecha=" + fecha + "]";
+    }
 }
