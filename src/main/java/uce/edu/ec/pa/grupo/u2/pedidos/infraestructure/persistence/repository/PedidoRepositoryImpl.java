@@ -1,8 +1,12 @@
-package uce.edu.ec.pa.grupo.u2.pedidos.domain.infraestructure;
+package uce.edu.ec.pa.grupo.u2.pedidos.infraestructure.persistence.repository;
+
+import java.util.List;
+import java.util.Optional;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import uce.edu.ec.pa.grupo.u2.pedidos.domain.model.Pedido;
 import uce.edu.ec.pa.grupo.u2.pedidos.domain.repository.PedidoRepository;
 
@@ -13,13 +17,14 @@ public class PedidoRepositoryImpl implements PedidoRepository {
     private EntityManager entityManager;
 
     @Override
-    public void created(Pedido pedido) {
+    public void create(Pedido pedido) {
         this.entityManager.persist(pedido);
     }
 
     @Override
-    public Pedido read(Integer id) {
-        return this.entityManager.find(Pedido.class, id);
+    public Optional<Pedido> read(Integer id) {
+        Pedido pedido = this.entityManager.find(Pedido.class, id);
+        return Optional.ofNullable(pedido);
     }
 
     @Override
@@ -29,10 +34,25 @@ public class PedidoRepositoryImpl implements PedidoRepository {
 
     @Override
     public void delete(Integer id) {
-        Pedido pedido = this.read(id);
+        Optional<Pedido> pedido = this.read(id);
+        pedido.ifPresent(this.entityManager::remove);
+    }
 
-        if (pedido != null) {
-            this.entityManager.remove(pedido);
-        }
+    @Override
+    public Optional<Pedido> readByNumber(String numero) {
+
+        TypedQuery<Pedido> query = this.entityManager.createQuery(
+                "SELECT p FROM Pedido p WHERE p.numero = :numeroVariable",
+                Pedido.class);
+
+        query.setParameter("numeroVariable", numero);
+
+        return Optional.ofNullable(query.getSingleResultOrNull());
+    }
+
+    @Override
+    public List<Pedido> readAll() {
+        return null;
+
     }
 }

@@ -1,7 +1,6 @@
 package uce.edu.ec.pa.grupo.u2;
 
-
-import java.time.LocalDateTime;
+import java.util.Optional;
 
 import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.QuarkusApplication;
@@ -23,27 +22,22 @@ public class Main implements QuarkusApplication {
     @Override
     public int run(String... args) throws Exception {
 
-      // CREATE (guardar)
-        Pedido pedido = new Pedido();
-        pedido.setProducto("Producto de prueba 2");
-        pedido.setPrecio(100.0);
-        pedido.setFecha(LocalDateTime.now());
-
-        this.pedidoService.guardar(pedido);
-
         // READ (buscar)
-        Pedido pedido1 = this.pedidoService.buscarPorId(2);
-        System.out.println("Pedido encontrado: " + pedido1);
+        Optional<Pedido> pedido = this.pedidoService.buscarPorId(100);
+        if (pedido.isPresent()) {
+            System.out.println("Pedido encontrado: " + pedido.get());
+        } else {
+            System.out.println("Pedido no encontrado");
+        }
 
-        // UPDATE (actualizar)
-        pedido.setPrecio(200.0);
-        this.pedidoService.actualizar(pedido);
+        //READ By Number
 
-        Pedido pedido2 = this.pedidoService.buscarPorId(2);
-        System.out.println("Pedido actualizado: " + pedido2);
-
-        // DELETE (eliminar)
-        this.pedidoService.eliminar(2);
+        Optional<Pedido> pedidoByNumber = this.pedidoService.buscarPorNumero("PED-0001");
+        if (pedidoByNumber.isPresent()) {
+            System.out.println("Pedido encontrado por número: " + pedidoByNumber.get());
+        } else {
+            System.out.println("Pedido no encontrado por número");
+        }
 
         return 0;
     }

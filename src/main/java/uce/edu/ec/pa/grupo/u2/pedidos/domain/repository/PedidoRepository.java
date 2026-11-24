@@ -1,14 +1,23 @@
 package uce.edu.ec.pa.grupo.u2.pedidos.domain.repository;
 
+import java.util.List;
+import java.util.Optional;
+
 import uce.edu.ec.pa.grupo.u2.pedidos.domain.model.Pedido;
 
 public interface PedidoRepository {
 
-    //Created
-    public void created(Pedido pedido);
+    //Create
+    public void create(Pedido pedido);
 
     //Read
-    public Pedido read(Integer id);
+    public Optional<Pedido> read(Integer id);
+
+    //Read by number
+    public Optional<Pedido> readByNumber(String numero);
+
+    //Read all
+    public List<Pedido> readAll();
     
     //Update
     public void update(Pedido pedido);
